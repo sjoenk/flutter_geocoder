@@ -10,12 +10,12 @@ class LocalGeocoding implements Geocoding {
   static const MethodChannel _channel = MethodChannel('github.com/aloisdeniel/geocoder');
 
   Future<List<Address>> findAddressesFromCoordinates(Coordinates coordinates) async  {
-    Iterable addresses = await _channel.invokeMethod('findAddressesFromCoordinates', coordinates.toMap());
+    Iterable addresses = await (_channel.invokeMethod('findAddressesFromCoordinates', coordinates.toMap()) as FutureOr<Iterable<dynamic>>);
     return addresses.map((x) => Address.fromMap(x)).toList();
   }
 
   Future<List<Address>> findAddressesFromQuery(String address) async {
-    Iterable coordinates = await _channel.invokeMethod('findAddressesFromQuery', { "address" : address });
+    Iterable coordinates = await (_channel.invokeMethod('findAddressesFromQuery', { "address" : address }) as FutureOr<Iterable<dynamic>>);
     return coordinates.map((x) => Address.fromMap(x)).toList();
   }
 }
